@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DARK</title>
+<meta name="theme-color" content="#07070a">
+</head>
+<body style="margin:0;background:#07070a">
+<noscript><p style="color:#fff;font-family:Arial;padding:20px">DARK necesita JavaScript activado.</p></noscript>
+
+<script>
+(function(){
+var CSS = `
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07070a;--panel:#101016;--panel2:#16161f;--bd:#23232e;--bd2:#2f2f3d;--fg:#ededf4;--mut:#87879a;--ac:#8b5cf6;--ac-d:#7c3aed;--cy:#22d3ee;--ok:#a3e635;--warn:#fbbf24}
+body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+#wrap{max-width:1180px;margin:0 auto}
+#app{border-left:1px solid var(--bd);border-right:1px solid var(--bd);min-height:100vh;display:flex;flex-direction:column}
+#app.hide{display:none}
+header{display:flex;align-items:center;gap:10px;padding:13px 22px;border-bottom:1px solid var(--bd);background:var(--panel);position:sticky;top:0;z-index:50}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--ac);display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff;flex:none}
+.brand{font-weight:700;font-size:16px;letter-spacing:.16em}
+.brand small{display:block;font-size:10px;letter-spacing:.1em;color:var(--mut);font-weight:400;margin-top:-2px}
+header .sp{flex:1}
+.iconbtn{background:var(--panel2);border:1px solid var(--bd);color:var(--fg);border-radius:8px;padding:7px 11px;font-size:11px;font-weight:500;cursor:pointer}
+.iconbtn:hover{background:var(--bd)}
+.iconbtn.accent{background:var(--ac);border-color:var(--ac);color:#fff}
+nav{display:flex;gap:3px;padding:8px 18px;border-bottom:1px solid var(--bd);background:var(--panel);overflow-x:auto;position:sticky;top:57px;z-index:49}
+nav button{background:transparent;border:1px solid transparent;color:var(--mut);padding:7px 11px;border-radius:8px;font-size:11.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+nav button:hover{color:var(--fg);background:var(--panel2)}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{padding:22px;flex:1}
+section{display:none}
+section.on{display:block}
+h1{font-size:30px;font-weight:700;letter-spacing:-.025em;line-height:1.15}
+h2{font-size:12.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin:26px 0 10px}
+h2:first-child{margin-top:0}
+p.lead{color:var(--mut);font-size:13.5px;margin-top:8px;max-width:640px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{font-size:10.5px;padding:4px 10px;border-radius:99px;border:1px solid var(--bd2);color:var(--mut);background:var(--panel);cursor:pointer;font-family:inherit}
+.chip:hover{color:var(--fg);border-color:var(--ac)}
+.chip.g{color:var(--ok);border-color:#3f4d1a;background:#141a09}
+.chip.c{color:var(--cy);border-color:#15454f;background:#08181c}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:11px;cursor:pointer;text-align:left;color:var(--fg);font:inherit;display:flex;flex-direction:column;gap:2px}
+.card:hover{background:var(--panel2);border-color:var(--ac)}
+.card .nm{font-size:12.5px;font-weight:500;line-height:1.3}
+.card .mt{font-size:9.5px;color:var(--mut);font-family:'JetBrains Mono',monospace;letter-spacing:.04em;text-transform:uppercase}
+.card .pl{font-size:10px;color:var(--ac);font-weight:500;margin-top:2px}
+.card.sys{border-style:dashed}
+.card.sq{min-height:66px;justify-content:center}
+input[type=text],input[type=search],input[type=password],select,textarea{width:100%;background:var(--panel);border:1px solid var(--bd);border-radius:9px;padding:9px 12px;color:var(--fg);font:inherit;font-size:12.5px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--ac)}
+select{appearance:none;cursor:pointer}
+.row{display:flex;gap:8px}
+.row input,.row textarea{flex:1}
+.btn{background:var(--ac);color:#fff;border:none;border-radius:9px;padding:9px 15px;font:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--ac-d)}
+.btn.ghost{background:var(--panel);border:1px solid var(--bd);color:var(--fg)}
+.subtabs{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
+.subtabs button{background:var(--panel);border:1px solid var(--bd);color:var(--mut);padding:6px 11px;border-radius:7px;font-size:11px;font-weight:500;cursor:pointer}
+.subtabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+#stage{margin-bottom:14px}
+#stage.empty{display:none}
+.stagebar{display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--panel2);border:1px solid var(--bd);border-bottom:none;border-radius:10px 10px 0 0}
+.stagebar .t{flex:1;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stagebar button{background:transparent;border:none;color:var(--mut);cursor:pointer;font-size:11px;padding:3px 7px;border-radius:5px}
+.stagebar button:hover{background:var(--bd);color:var(--fg)}
+.stagebox{border:1px solid var(--bd);border-radius:0 0 10px 10px;overflow:hidden;background:#000}
+.stagebox iframe{width:100%;border:none;display:block;background:#000}
+#dos,#flash{width:100%;height:min(62vh,540px);background:#000}
+.servers{display:flex;gap:5px;padding:7px 8px;background:var(--panel2);border:1px solid var(--bd);border-top:none;border-radius:0 0 10px 10px}
+.servers button{flex:1;background:var(--panel);border:1px solid var(--bd);color:var(--mut);font-size:10px;padding:5px 2px;border-radius:6px;cursor:pointer}
+.servers button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+#radio{border:1px solid var(--bd);background:var(--panel);border-radius:10px;padding:11px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+#radio .eq{display:flex;gap:2px;align-items:flex-end;height:18px;width:16px;flex:none}
+#radio .eq i{width:3px;background:var(--ac);border-radius:1px;height:6px}
+#radio.off .eq i{height:5px;background:var(--mut)}
+#radio .info{flex:1;min-width:0}
+#radio .info b{display:block;font-size:12px;font-weight:500}
+#radio .info span{font-size:10.5px;color:var(--mut)}
+#radio audio{width:150px;height:30px;flex:none}
+.note{background:var(--panel);border:1px solid var(--bd);border-left:2px solid var(--warn);border-radius:8px;padding:10px 12px;font-size:11.5px;color:var(--mut);margin-top:14px;line-height:1.55}
+.note b{color:var(--fg);font-weight:500}
+.steps{display:grid;gap:7px;margin-top:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.step{display:flex;gap:10px;background:var(--panel);border:1px solid var(--bd);border-radius:9px;padding:10px 12px;font-size:12px;color:var(--mut)}
+.step b{color:var(--fg);font-weight:500;display:block;font-size:12.5px;margin-bottom:1px}
+.step .n{font-family:'JetBrains Mono',monospace;color:var(--ac);font-size:11px;flex:none;padding-top:2px}
+.tile{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:13px;cursor:pointer;text-align:left;color:var(--fg);font:inherit}
+.tile:hover{border-color:var(--ac);background:var(--panel2)}
+.tile .ico{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ac);letter-spacing:.1em}
+.tile b{display:block;font-size:12.5px;font-weight:500;margin:3px 0 2px}
+.tile span{font-size:10.5px;color:var(--mut);line-height:1.4}
+.acct{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:11px;margin-bottom:7px}
+.acct .top{display:flex;align-items:center;gap:8px}
+.acct .top b{font-size:12.5px;flex:1}
+.acct .top .tag{font-size:9.5px;font-family:'JetBrains Mono',monospace;color:var(--cy);border:1px solid #15454f;background:#08181c;padding:2px 6px;border-radius:5px}
+.acct .det{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mut);margin-top:5px;word-break:break-all}
+.acct .acts{display:flex;gap:5px;margin-top:8px}
+.acct .acts button{flex:1;background:var(--panel2);border:1px solid var(--bd);color:var(--mut);font:inherit;font-size:10.5px;padding:5px;border-radius:6px;cursor:pointer}
+.acct .acts button.go{background:var(--ac);border-color:var(--ac);color:#fff}
+.empty{font-size:12px;color:var(--mut);padding:16px;text-align:center;border:1px dashed var(--bd);border-radius:10px}
+.mtop{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.mtop .ttl{flex:1;font-size:13px;font-weight:500}
+.mtop .ttl span{display:block;font-size:10px;color:var(--mut);font-weight:400}
+.badge{font-size:9.5px;font-family:'JetBrains Mono',monospace;padding:3px 7px;border-radius:5px;border:1px solid #4a3a12;background:#1a1408;color:var(--warn)}
+.badge.on{border-color:#3f4d1a;background:#141a09;color:var(--ok)}
+.mplayer{border:1px solid var(--bd);border-radius:10px;overflow:hidden;background:#000}
+.mplayer iframe{width:100%;border:none;display:block;background:#000}
+.status{font-size:11px;color:var(--warn);font-family:'JetBrains Mono',monospace;padding:10px 12px;background:#1a1408;border-bottom:1px solid #4a3a12}
+.msgs{border:1px solid var(--bd);border-radius:10px;background:var(--panel);padding:12px;height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
+.msg{max-width:88%;padding:9px 12px;border-radius:10px;font-size:12.5px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}
+.msg.u{align-self:flex-end;background:var(--ac);color:#fff;border-bottom-right-radius:3px}
+.msg.b{align-self:flex-start;background:var(--panel2);border:1px solid var(--bd);border-bottom-left-radius:3px}
+.msg.err{color:var(--warn);font-size:11.5px;font-family:'JetBrains Mono',monospace}
+footer{border-top:1px solid var(--bd);padding:10px 22px;display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--mut);background:var(--panel)}
+.dot{width:6px;height:6px;border-radius:99px;background:var(--ok);flex:none}
+footer .sp{flex:1}
+kbd{font-family:'JetBrains Mono',monospace;background:var(--panel2);border:1px solid var(--bd2);border-radius:4px;padding:1px 5px;font-size:10px;color:var(--fg)}
+#camo{display:none;background:#fff;color:#1f1f1f;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+#camo.on{display:block}
+#camo .bar{display:flex;align-items:center;gap:8px;padding:9px 16px;border-bottom:1px solid #dadce0}
+#camo .bar .g{width:22px;height:22px;border-radius:4px;background:#1a73e8;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+#camo .bar .nm{font-size:13px;color:#3c4043}
+#camo .bar .tag{font-size:11px;color:#5f6368;border:1px solid #dadce0;border-radius:4px;padding:1px 6px}
+#camo .tools{display:flex;gap:16px;padding:7px 16px;border-bottom:1px solid #dadce0;font-size:12px;color:#444746;flex-wrap:wrap}
+#camo .page{padding:38px 60px 60px;max-width:820px}
+#camo h3{font-size:22px;font-weight:400;margin-bottom:16px;color:#000}
+#camo p{font-size:13.5px;line-height:1.75;margin-bottom:12px}
+#camo .hint{text-align:center;font-size:10.5px;color:#9aa0a6;padding:8px;border-top:1px solid #dadce0}
+@media(max-width:640px){main{padding:16px}h1{font-size:23px}#camo .page{padding:24px 20px}}
+`;
+window.DARK_CSS = CSS;
+function inject(){
+  if (document.getElementById('dark-css')) return;
+  var s = document.createElement('style');
+  s.id = 'dark-css';
+  s.textContent = CSS;
+  document.head.appendChild(s);
+}
+inject();
+window.DARK_REINJECT = inject;
+})();
+</script>
+
+<div id="camo">
+  <div class="bar"><div class="g">≡</div><div class="nm">Documentos</div><div class="tag">Guardado</div></div>
+  <div class="tools"><span>Archivo</span><span>Editar</span><span>Ver</span><span>Insertar</span><span>Formato</span><span>Herramientas</span><span>Ayuda</span></div>
+  <div class="page">
+    <h3>Tema 4: La Revolución Industrial</h3>
+    <p>La Revolución Industrial fue un proceso de transformación económica, social y tecnológica que se inició en la segunda mitad del siglo XVIII en el Reino Unido y que se extendió después a Europa continental y a Estados Unidos.</p>
+    <p>Entre sus causas destacan el crecimiento demográfico, la acumulación de capital procedente del comercio colonial, la disponibilidad de carbón y hierro, y una serie de innovaciones técnicas aplicadas a la producción textil y a la máquina de vapor.</p>
+    <p>Las consecuencias sociales fueron profundas: aparición del proletariado industrial, éxodo rural, crecimiento urbano desordenado y primeras organizaciones obreras. Conviene relacionar este punto con el tema 5.</p>
+    <p>Bibliografía pendiente de revisar. Recordar citar en formato APA.</p>
+  </div>
+  <div class="hint">Pulsa <b>Esc</b> para volver a DARK</div>
+</div>
+
+<div id="wrap">
+<div id="app">
+  <header>
+    <div class="logo">D</div>
+    <div class="brand">DARK<small>sin instalar nada</small></div>
+    <div class="sp"></div>
+    <button class="iconbtn" id="camoBtn">Camuflaje</button>
+    <button class="iconbtn accent" data-tab="juegos">Jugar</button>
+  </header>
+  <nav>
+    <button data-tab="inicio" class="on">Inicio</button>
+    <button data-tab="juegos">Juegos</button>
+    <button data-tab="pelis">Películas</button>
+    <button data-tab="musica">Música</button>
+    <button data-tab="yt">YouTube</button>
+    <button data-tab="ia">IA</button>
+    <button data-tab="cuentas">Cuentas</button>
+    <button data-tab="ajustes">Ajustes</button>
+  </nav>
+
+  <main>
+    <section id="s-inicio" class="on">
+      <h1>Todo en un solo sitio,<br>sin descargar nada.</h1>
+      <p class="lead">Cientos de juegos, películas, series, música y vídeo, e IA. Todo se ejecuta dentro de la página: no hay que instalar nada.</p>
+      <div class="chips">
+        <span class="chip g">sin registro</span><span class="chip g">sin instalar</span>
+        <span class="chip c">chat de IA propio</span><span class="chip c">modo camuflaje</span>
+      </div>
+      <h2>Acceso rápido</h2>
+      <div class="grid">
+        <button class="tile" data-tab="juegos"><span class="ico">01</span><b>Juegos</b><span>DOS, Flash, 6 consolas y acción moderna</span></button>
+        <button class="tile" data-tab="pelis"><span class="ico">02</span><b>Películas</b><span>90 títulos y 24 series, 5 servidores</span></button>
+        <button class="tile" data-tab="musica"><span class="ico">03</span><b>Música</b><span>Buscador con cola y emisoras</span></button>
+        <button class="tile" data-tab="yt"><span class="ico">04</span><b>YouTube</b><span>60 temas y reproductor integrado</span></button>
+        <button class="tile" data-tab="ia"><span class="ico">05</span><b>IA</b><span>Chat propio y herramientas de estudio</span></button>
+        <button class="tile" data-tab="cuentas"><span class="ico">06</span><b>Cuentas</b><span>Guarda tus logins y entra en un clic</span></button>
+      </div>
+      <h2>Cómo se usa</h2>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><div><b>Elige lo que quieras abrir</b>Se carga en el reproductor, arriba de cada sección.</div></div>
+        <div class="step"><span class="n">2</span><div><b>Si un vídeo no arranca, cambia de modo</b>Hay embed oficial y espejos sin anuncios.</div></div>
+        <div class="step"><span class="n">3</span><div><b>Ante una revisión, pulsa Esc</b>La pantalla se convierte en un documento de clase al instante.</div></div>
+      </div>
+      <div class="note"><b>Sobre los anuncios:</b> el modo por defecto usa el reproductor oficial, que es el que nunca falla pero sí mete publicidad. El modo "sin anuncios" pasa por espejos de Invidious y los quita, a cambio de que a veces alguno esté caído.</div>
+    </section>
+
+    <section id="s-juegos">
+      <div id="stage" class="empty">
+        <div class="stagebar"><span class="t" id="stageTitle"></span><button id="stageExt">Abrir aparte</button><button id="stageClose">Cerrar</button></div>
+        <div class="stagebox" id="stageBox"></div>
+      </div>
+      <div class="subtabs" id="gameTabs">
+        <button class="on" data-cat="dos">DOS</button>
+        <button data-cat="flash">Flash</button>
+        <button data-cat="consola">Consolas</button>
+        <button data-cat="moderno">Modernos</button>
+      </div>
+      <input type="search" id="gameSearch" placeholder="Filtrar juegos por nombre o consola...">
+      <div class="grid" id="gameGrid" style="margin-top:10px"></div>
+      <div class="note" id="gameNote"></div>
+    </section>
+
+    <section id="s-pelis">
+      <div id="stage2"></div>
+      <input type="search" id="filmSearch" placeholder="Filtrar por título o género...">
+      <div class="row" style="margin-top:8px">
+        <input type="text" id="imdbInput" placeholder="O pega un ID de IMDb: tt0133093">
+        <button class="btn ghost" id="imdbGo">Abrir</button>
+      </div>
+      <div class="grid" id="filmGrid" style="margin-top:10px"></div>
+      <div class="note"><b>Si la película no arranca:</b> prueba otro servidor en la barra de arriba, o espera unos segundos. Estos reproductores cargan desde terceros y a veces tardan o caen.</div>
+    </section>
+
+    <section id="s-musica">
+      <div class="mtop">
+        <div class="ttl">DARK Music<span>busca y suena aquí mismo</span></div>
+        <span class="badge" id="mBadge">reproductor oficial</span>
+      </div>
+      <div class="mplayer">
+        <iframe id="mFrame" height="360" src="about:blank" title="reproductor" allow="autoplay; encrypted-media; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <input type="search" id="mSearch" placeholder="Buscar canción, artista, álbum...">
+        <button class="btn" id="mGo">Buscar</button>
+      </div>
+      <div class="row" style="margin-top:7px">
+        <select id="mInst"></select>
+        <button class="btn ghost" id="mDirect">Sin anuncios</button>
+        <button class="btn ghost" id="mExt">Abrir fuera</button>
+      </div>
+      <h2>Estados de ánimo</h2>
+      <div class="grid" id="mMoods"></div>
+      <h2>Radio sin anuncios, siempre</h2>
+      <div id="radio" class="off">
+        <div class="eq"><i></i><i></i><i></i><i></i></div>
+        <div class="info"><b id="radName">Sin emisora</b><span id="radTag">Streams directos, nunca fallan</span></div>
+        <audio id="audio" controls preload="none"></audio>
+      </div>
+      <div class="grid" id="radioGrid"></div>
+      <div class="note"><b>Las emisoras de abajo no llevan publicidad y nunca fallan.</b> El buscador de arriba es un reproductor de YouTube: si activas "Sin anuncios" cambia a espejo, que puede tardar o quedarse en negro según el servidor.</div>
+    </section>
+
+    <section id="s-yt">
+      <div class="mtop">
+        <div class="ttl">YouTube<span>busca y reproduce sin salir</span></div>
+        <span class="badge" id="yBadge">reproductor oficial</span>
+      </div>
+      <div class="stagebox" style="border-radius:10px;border:1px solid var(--bd);margin-bottom:10px">
+        <iframe id="ytFrame" height="380" src="about:blank" title="youtube" allow="autoplay; encrypted-media; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="row">
+        <input type="search" id="ytSearch" placeholder="Buscar en YouTube...">
+        <button class="btn" id="ytGo">Buscar</button>
+      </div>
+      <div class="row" style="margin-top:7px">
+        <input type="text" id="ytLink" placeholder="O pega un enlace de vídeo...">
+        <button class="btn ghost" id="ytLinkGo">Reproducir</button>
+      </div>
+      <div class="row" style="margin-top:7px">
+        <select id="yInst"></select>
+        <button class="btn ghost" id="yDirect">Sin anuncios</button>
+        <button class="btn ghost" id="yExt">Abrir fuera</button>
+      </div>
+      <div class="chips" id="ytChips"></div>
+      <h2>Temas</h2>
+      <div class="grid" id="ytTopics"></div>
+      <h2>Canales y creadores</h2>
+      <div class="grid" id="ytChannels"></div>
+      <h2>Explorar</h2>
+      <div class="grid" id="ytMore"></div>
+      <div class="note"><b>Si un vídeo no carga:</b> pulsa "Abrir fuera" o cambia de modo. El reproductor oficial funciona siempre; los espejos quitan los anuncios pero algunos servidores los tienen bloqueados.</div>
+    </section>
+
+    <section id="s-ia">
+      <div class="msgs" id="msgs">
+        <div class="msg b">Hola. Pregúntame lo que sea: dudas de clase, explicaciones, resúmenes o código. Funciona sin cuenta.</div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <textarea id="aiPrompt" rows="2" placeholder="Escribe tu pregunta..."></textarea>
+        <button class="btn" id="aiSend">Enviar</button>
+      </div>
+      <div class="row" style="margin-top:7px">
+        <select id="aiModel">
+          <option value="openai">modelo: openai</option>
+          <option value="mistral">modelo: mistral</option>
+          <option value="openai-fast">modelo: openai-fast</option>
+        </select>
+        <button class="btn ghost" id="aiClear">Limpiar</button>
+      </div>
+      <h2>Abrir en otra IA</h2>
+      <div class="chips" id="aiChips"></div>
+      <h2>Herramientas de estudio</h2>
+      <div class="grid" id="studyGrid"></div>
+      <div class="note"><b>El chat de arriba va contra un servicio gratuito sin clave.</b> Si un día no responde, los botones de abajo abren la misma pregunta en otras IA en una pestaña nueva.</div>
+    </section>
+
+    <section id="s-cuentas">
+      <h2>Tus cuentas</h2>
+      <p class="lead">Para lo que no cabe en la página: Fortnite, GTA V, streaming. Se guardan solo en este navegador.</p>
+      <div id="acctList" style="margin-top:12px"></div>
+      <h2>Añadir cuenta</h2>
+      <div class="row"><input type="text" id="acName" placeholder="Nombre (ej. Fortnite - Juan)"></div>
+      <div class="row" style="margin-top:7px">
+        <select id="acPlat">
+          <option value="fortnite">Fortnite (Xbox Cloud)</option>
+          <option value="gta">GTA V (GeForce Now)</option>
+          <option value="epic">Epic Games</option>
+          <option value="steam">Steam</option>
+          <option value="netflix">Netflix</option>
+          <option value="prime">Prime Video</option>
+          <option value="disney">Disney+</option>
+          <option value="spotify">Spotify</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="row" style="margin-top:7px">
+        <input type="text" id="acUser" placeholder="Usuario o correo">
+        <input type="password" id="acPass" placeholder="Contraseña">
+      </div>
+      <div class="row" style="margin-top:7px">
+        <button class="btn" id="acAdd">Guardar cuenta</button>
+        <button class="btn ghost" id="acClear">Borrar todas</button>
+      </div>
+      <div class="note"><b>Las contraseñas se guardan en claro</b> en el almacenamiento local de este navegador. Sirve para cuentas de juego y streaming; no para el correo del instituto.</div>
+    </section>
+
+    <section id="s-ajustes">
+      <h2>Camuflaje</h2>
+      <p class="lead">Convierte la pantalla en un documento de Google con un tema de clase. La tecla <kbd>Esc</kbd> lo activa y lo desactiva.</p>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="camoBtn2">Activar camuflaje</button></div>
+      <h2>Por qué esto pasa los filtros</h2>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><div><b>Un solo dominio</b>Todo se sirve desde la misma página; el filtro ve una URL y no las decenas de sitios que hay detrás.</div></div>
+        <div class="step"><span class="n">2</span><div><b>Chat de IA propio</b>La IA no va en un marco, se pide por red desde la propia página, así que ningún bloqueo de inserción le afecta.</div></div>
+        <div class="step"><span class="n">3</span><div><b>Espejos en vez de la web original</b>Invidious sirve el vídeo sin anuncios y con menos scripts que la web de YouTube.</div></div>
+      </div>
+      <h2>Descargas de ROMs</h2>
+      <p class="lead">Los emuladores descargan la ROM directamente. Si el servidor no permite origen cruzado, la página reintenta por tres proxies públicos antes de rendirse.</p>
+      <h2>Datos</h2>
+      <div class="row"><button class="btn ghost" id="clearBtn">Borrar preferencias (no cuentas)</button></div>
+      <h2>Créditos</h2>
+      <p class="lead" style="font-size:12px">Consolas: Retrostic. DOS: dos.zone con js-dos. Flash: archivo de Armor Games con Ruffle. Vídeo: YouTube y espejos de Invidious. IA: Pollinations. Emisoras: SomaFM, Radio Paradise y Nightride FM. Pelis: vidsrc y 2embed.</p>
+    </section>
+  </main>
+
+  <footer><span class="dot"></span><span>Listo</span><span class="sp"></span><span><kbd>Esc</kbd> camuflaje</span></footer>
+</div>
+</div>
+
+<script>
+(function(){
+  var s1 = document.createElement('script');
+  s1.src = 'https://v8.js-dos.com/latest/emulators/emulators.js';
+  document.head.appendChild(s1);
+  var l = document.createElement('link');
+  l.rel = 'stylesheet'; l.href = 'https://v8.js-dos.com/latest/js-dos.css';
+  document.head.appendChild(l);
+  var s2 = document.createElement('script');
+  s2.src = 'https://v8.js-dos.com/latest/js-dos.js';
+  document.head.appendChild(s2);
+  var s3 = document.createElement('script');
+  s3.src = 'https://unpkg.com/@ruffle-rs/ruffle';
+  document.head.appendChild(s3);
+})();
+</script>
+
+<script>
+(function(){
+if (!document.getElementById('dark-css')) window.DARK_REINJECT && window.DARK_REINJECT();
+var $ = function(s){ return document.querySelector(s); };
+var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+var store = {
+  get: function(k, d){ try { var v = localStorage.getItem('dark_' + k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set: function(k, v){ try { localStorage.setItem('dark_' + k, JSON.stringify(v)); } catch(e){} }
+};
+function go(tab){
+  $$('nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.tab === tab); });
+  $$('section').forEach(function(s){ s.classList.toggle('on', s.id === 's-' + tab); });
+  store.set('tab', tab); window.scrollTo({top:0});
+}
+$$('[data-tab]').forEach(function(b){ b.onclick = function(){ go(b.dataset.tab); }; });
+var camo = $('#camo'), app = $('#app');
+function toggleCamo(force){
+  var on = force !== undefined ? force : !camo.classList.contains('on');
+  camo.classList.toggle('on', on); app.classList.toggle('hide', on);
+}
+$('#camoBtn').onclick = function(){ toggleCamo(); };
+$('#camoBtn2').onclick = function(){ toggleCamo(true); };
+$('#camo').onclick = function(){ toggleCamo(false); };
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') toggleCamo(); });
+
+/* ===== DATOS ===== */
+var DOS = [
+  ['Grand Theft Auto','1997','https://cdn.dos.zone/custom/dos/gta-mobile.jsdos'],
+  ['DOOM','1993','https://cdn.dos.zone/custom/dos/doom.jsdos'],
+  ['DOOM II','1994','https://cdn.dos.zone/custom/dos/doom2.jsdos'],
+  ['Heretic','1994','https://cdn.dos.zone/custom/dos/heretic.jsdos'],
+  ['Wolfenstein 3D','1992','https://cdn.dos.zone/original/2X/a/ac888d1660aa253f0ed53bd6c962c894125aaa19.jsdos'],
+  ['Duke Nukem 3D','1996','https://br.cdn.dos.zone/published/br.qexpra.DUKEep1.jsdos'],
+  ['Mortal Kombat','1993','https://cdn.dos.zone/original/2X/8/872f3668c36085d0b1ace46872145285364ee628.jsdos'],
+  ['Need for Speed','1994','https://cdn.dos.zone/custom/dos/nfs.jsdos'],
+  ['Tyrian 2000','1999','https://cdn.dos.zone/custom/dos/tyrian-2000.jsdos'],
+  ['Another World','1991','https://cdn.dos.zone/original/2X/1/1031eb810e8b648fc5f777b3bd9cbc0187927fd4.jsdos'],
+  ['Prince of Persia','1989','https://cdn.dos.zone/custom/crafted/princeofpersiaorigin.jsdos'],
+  ['Commander Keen 4','1991','https://br.cdn.dos.zone/published/br.nctois.KEEN4.jsdos'],
+  ['Jazz Jackrabbit','1994','https://br.cdn.dos.zone/published/br.kzhuta.Jazz.jsdos'],
+  ['Heroes of Might & Magic II','1996','https://cdn.dos.zone/custom/dos/homm_2.jsdos'],
+  ['SimCity 2000','1993','https://cdn.dos.zone/original/2X/b/b1ed3b93829bdff0c9062c5642767825dd52baf1.jsdos'],
+  ['Sim City','1989','https://cdn.dos.zone/original/2X/7/744842062905f72648a4d492ccc2526d039b3702.jsdos'],
+  ['Warcraft','1994','https://cdn.dos.zone/custom/dos/warcraft.jsdos'],
+  ['Lemmings','1991','https://cdn.dos.zone/custom/dos/lemmings.jsdos'],
+  ['Tetris','1988','https://cdn.dos.zone/original/2X/3/37ce97891bc876adc2cbb7e44e4018c95644a19c.jsdos'],
+  ['The Lost Vikings','1992','https://cdn.dos.zone/original/2X/1/1b063b2520052ebb504184667ac95e72423331de.jsdos'],
+  ['Digger','1983','https://cdn.dos.zone/original/2X/2/24b00b14f118580763440ecaddcc948f8cb94f14.jsdos'],
+  ['Pac-Man','1983','https://cdn.dos.zone/original/2X/5/5cdcffbf268b3be0555025902b52a8d21ad595b9.jsdos']
+];
+var FLASH = [
+  ['Kingdom Rush','torres','kingdom-rush-12141e0f2'],['GemCraft','torres','gemcraft-1716817f'],
+  ['GemCraft Labyrinth','torres','gemcraft-labyrinth-1031779f9'],['Cursed Treasure','torres','cursed-treasure-5803395b'],
+  ['Cursed Treasure 2','torres','cursed-treasure-2-1441212ac'],['Age of War','estrategia','age-of-war-6165ed4'],
+  ['Age of War 2','estrategia','age-of-war-2-5933395b'],['Sonny','rol','sonny-505817f'],
+  ['Sonny 2','rol','sonny-2-2900817f'],['Epic Battle Fantasy','rol','epic-battle-fantasy-37765ed4'],
+  ['Raze','acción','raze-53959cba'],['Raze 2','acción','raze-2-12275fdd9'],['Raze 3','acción','raze-3-15979abf4'],
+  ['Electric Man 2','acción','electric-man-2-540817f'],['Boxhead','acción','boxhead-210817f'],
+  ['Boxhead 2Play','acción','boxhead-2play-158817f'],['Boxhead Zombie Wars','acción','boxhead-the-zombie-w-1004817f'],
+  ['Sift Heads','acción','sift-heads-1410817f'],['The Last Stand','acción','the-last-stand-269817f'],
+  ['The Last Stand 2','acción','the-last-stand-2-1443817f'],['Infectonator','acción','infectonator-50209cba'],
+  ['Infectonator 2','acción','infectonator-2-131503467'],['13 Days After','acción','13-days-after-131953467'],
+  ['10800 Zombies','acción','10800-zombies-1506905b0'],['20 Waves','acción','20-waves-15962e852'],
+  ['Fancy Pants Adventure','plataformas','fancy-pants-adventur-301817f'],
+  ['Fancy Pants Adventure 2','plataformas','fancy-pants-adventur-131553467'],
+  ['Learn to Fly','plataformas','learn-to-fly-37895ed4'],['Learn to Fly 2','plataformas','learn-to-fly-2-11967fdd9'],
+  ['Learn to Fly 3','plataformas','learn-to-fly-3-17987d62f'],['Papa Louie 2','plataformas','papa-louie-2-1530805b0'],
+  ['Achievement Unlocked','puzzle','achievement-unlocked-131963467'],['3 Pandas','puzzle','3-pandas-1438805b0'],
+  ['300 Miles to Pigslan','puzzle','300-miles-to-pigslan-12792fdd9'],['1Quest','rol','1quest-1605489da'],
+  ['10','puzzle','10-157093ad1'],['10 is Again','puzzle','10-is-again-15803f457'],
+  ['1066','estrategia','1066-45949cba'],['1 Screen Hero','plataformas','1-screen-hero-17692cbcc']
+];
+var CONSOLA = [
+  ['Pokémon Esmeralda','gba','pokemon-emerald-version-82328'],['Pokémon Rojo Fuego','gba','pokemon-fire-red-version-v1-1-82327'],
+  ['Pokémon Rubí','gba','pokemon-ruby-version-v1-1-82484'],['Pokémon Verde Hoja','gba','pokemon-leaf-green-version-v1-1-82483'],
+  ['Pokémon Zafiro','gba','pokemon-sapphire-version-v1-1-82481'],['Zelda: The Minish Cap','gba','legend-of-zelda-the-the-minish-cap-82488'],
+  ['Zelda: A Link to the Past','gba','legend-of-zelda-the-a-link-to-the-past-four-swords-82485'],
+  ['Mario Kart Super Circuit','gba','mario-kart-super-circuit-82500'],['Super Mario World','gba','super-mario-advance-2-super-mario-world-82480'],
+  ['Super Mario Bros. 3','gba','super-mario-advance-4-super-mario-bros-3-menace-e-82703'],
+  ['Super Mario Advance','gba','super-mario-advance-82497'],['Yoshi Island','gba','super-mario-advance-3-yoshis-island-82498'],
+  ['Kirby Nightmare in Dreamland','gba','kirby-nightmare-in-dreamland-82486'],['Kirby Amazing Mirror','gba','kirby-the-amazing-mirror-82496'],
+  ['Golden Sun','gba','golden-sun-82508'],['Fire Emblem','gba','fire-emblem-82505'],
+  ['Mario & Luigi Superstar Saga','gba','mario-luigi-superstar-saga-82495'],['Metal Slug Advance','gba','metal-slug-advance-11766'],
+  ['Wario Land 4','gba','wario-land-4-mode7-e-82715'],['Pokémon Mystery Dungeon','gba','pokemon-mystery-dungeon-red-rescue-team-82490'],
+  ['Pokémon Jupiter (hack)','gba','pokemon-jupiter-6-04-ruby-hack-82487'],['Crash Bandicoot','gba','crash-bandicoot-the-wrath-of-cortex-gba-82623'],
+  ['Naruto Ninja Council 2','gba','naruto-ninja-council-2-82491'],
+  ['Super Mario Kart','snes','super-mario-kart-full-g-81982'],['Donkey Kong Country','snes','donkey-kong-country-v3-2-81984'],
+  ['Donkey Kong Country 2','snes','donkey-kong-country-2-diddys-kong-quest12-1-81979'],
+  ['Donkey Kong Country 3','snes','donkey-kong-country-3-dixie-ko-double-trouble-81993'],
+  ['Super Mario All-Stars','snes','super-mario-all-stars-online-81983'],
+  ['Super Mario All-Stars + World','snes','super-mario-all-stars-super-mario-world-game-81978'],
+  ['Super Mario World (E)','snes','super-mario-world-v1-1-eu-82024'],['Zelda A Link to the Past','snes','legend-of-zelda-the-a-link-to-the-past1-81981'],
+  ['Super Metroid','snes','super-metroid-jug-81991'],['Chrono Trigger','snes','chrono-trigger-2803'],
+  ['Super Mario RPG','snes','super-mario-rpg-legend-of-the-seven-stars-roms-81989'],['Kirby Super Star','snes','kirby-super-star-game-81992'],
+  ['Yoshi Island SNES','snes','super-mario-world-2-yoshis-island-v1-2-81980'],['Street Fighter II','snes','street-fighter-ii-the-world-warrior-2887'],
+  ['Street Fighter II Turbo','snes','street-fighter-ii-turbo-hyper-fighting-2813'],['Mortal Kombat','snes','mortal-kombat-2821'],
+  ['Ultimate Mortal Kombat 3','snes','ultimate-mortal-kombat-3-2808'],['Contra III','snes','contra-iii-the-alien-wars-2811'],
+  ['Turtles in Time','snes','teenage-mutant-ninja-turtles-iv-turtles-in-time-2806'],['Sunset Riders','snes','sunset-riders-2824'],
+  ['Megaman X3','snes','megaman-x3-2817'],['Final Fight','snes','final-fight-2871'],['Top Gear','snes','top-gear-2823'],
+  ['Top Gear 2','snes','top-gear-2-2845'],['Aladdin SNES','snes','aladdin-2810'],['Doom SNES','snes','doom-2818'],
+  ['Super Bomberman 4','snes','super-bomberman-4-2829'],['X-Men vs Street Fighter','snes','x-men-vs-street-fighter-2878'],
+  ['Super Mario Bros 3','nes','super-mario-bros-3-83138'],['Super Mario Bros','nes','super-mario-bros-eur-83126'],
+  ['Super Mario Bros 2','nes','super-mario-bros-2-e-83128'],['Zelda','nes','zelda-the-legend-of-zelda-83129'],
+  ['Zelda 2','nes','zelda-2-the-adventure-of-link-83136'],['Contra','nes','contra-388'],['Metroid','nes','metroid-rom-83133'],
+  ['Mega Man','nes','mega-man-390'],['Mega Man 2','nes','mega-man-2-391'],['Tetris NES','nes','tetris-393'],
+  ['Bomberman','nes','bomberman-404'],['Double Dragon','nes','double-dragon-407'],['Pac-Man NES','nes','pac-man-417'],
+  ['Donkey Kong','nes','donkey-kong-ju-83174'],['Ice Climber','nes','ice-climber-405'],['Kung Fu','nes','kung-fu-422'],
+  ['Excitebike','nes','excitebike-481'],['Galaga','nes','galaga-demons-of-death-504'],
+  ['Punch-Out','nes','mike-tyson-s-punch-out-389'],['Kirby Adventure','nes','kirbys-adventure-e-83127'],
+  ['TMNT','nes','teenage-mutant-ninja-turtles-396'],['TMNT II','nes','teenage-mutant-ninja-turtles-ii-the-arcade-game-399'],
+  ['Super 700-in-1','nes','super-700-in-1-83184'],
+  ['Super Mario 64','n64','super-mario-64-83299'],['Mario Kart 64','n64','mario-kart-64-v1-1-e-83296'],
+  ['Super Smash Bros','n64','super-smash-bros-83298'],['Zelda Ocarina of Time','n64','legend-of-zelda-the-ocarina-of-time-v12-2-83297'],
+  ['Zelda Majora Mask','n64','legend-of-zelda-the-majoras-mask-original-83305'],['Donkey Kong 64','n64','donkey-kong-64-83302'],
+  ['GoldenEye 007','n64','007-goldeneye-7363'],['Star Fox 64','n64','star-fox-64-v1-1-83300'],['Paper Mario','n64','paper-mario-83301'],
+  ['Mario Party','n64','mario-party-83312'],['Mario Party 2','n64','mario-party-2-original-83313'],['Mario Party 3','n64','mario-party-3-83307'],
+  ['Pokémon Stadium','n64','pokemon-stadium-v1-1-e-83304'],['Pokémon Stadium 2','n64','pokemon-stadium-2-83306'],
+  ['Banjo-Kazooie','n64','banjo-kazooie-7365'],['Conker Bad Fur Day','n64','conker-s-bad-fur-day-7364'],
+  ['Resident Evil 2','n64','resident-evil-2-7366'],['Doom 64','n64','doom-64-7376'],['F-Zero X','n64','f-zero-x-83319'],
+  ['Diddy Kong Racing','n64','diddy-kong-racing-7434'],['Rayman 2','n64','rayman-2-the-great-escape-7411'],['Cruis n USA','n64','cruis-n-usa-7901'],
+  ['Sonic the Hedgehog','megadrive','sonic-the-hedgehog-hack-by-puto-v1-1-8997'],['Sonic 2','megadrive','sonic-the-hedgehog-2-game-8982'],
+  ['Sonic 3','megadrive','sonic-the-hedgehog-3-9273'],['Streets of Rage','megadrive','bare-knuckle-ikari-no-tetsuken-streets-of-rage-rom-9276'],
+  ['Streets of Rage 2','megadrive','bare-knuckle-ii-shitou-heno-chingonka-streets-of-rage-ii-rom-9001'],
+  ['Streets of Rage 3','megadrive','streets-of-rage-3-rom-9651'],['Golden Axe II','megadrive','golden-axe-ii-9062'],
+  ['Castlevania Bloodlines','megadrive','castlevania-bloodlines-usa-83460'],['Shinobi III','megadrive','shinobi-iii-return-of-the-ninja-master-8972'],
+  ['Mortal Kombat MD','megadrive','mortal-kombat-8951'],['Mortal Kombat 3 MD','megadrive','mortal-kombat-3-4-83407'],
+  ['Super Street Fighter II','megadrive','super-street-fighter-ii-the-new-challengers-8976'],
+  ['Contra Hard Corps','megadrive','contra-hard-corps-hack-by-mijet-v20080924-8974'],['Aladdin MD','megadrive','aladdin-9956'],
+  ['Toy Story','megadrive','toy-story-9145'],['Jungle Book','megadrive','jungle-book-the-8965'],['Spider-Man','megadrive','spider-man-8967'],
+  ['Mickey Mania','megadrive','mickey-mania-the-timeless-adventures-of-mickey-mouse-9034'],
+  ['Altered Beast','megadrive','altered-beast-ju-rev-01-83404'],['Sunset Riders MD','megadrive','sunset-riders-83406'],
+  ['Virtua Racing','megadrive','virtua-racing-8969'],['Super Hang-On','megadrive','super-hang-on-9464'],
+  ['Prince of Persia MD','megadrive','prince-of-persia-9032'],['TMNT Return of Shredder','megadrive','teenage-mutant-ninja-turtles-return-of-the-shredder-9091'],
+  ['Tiny Toon Buster','megadrive','tiny-toon-adventures-buster-s-hidden-treasure-8960']
+];
+var SISTEMAS = [
+  ['PlayStation 1','ps-1'],['Nintendo DS','nds'],['PSP','psp'],['GameCube','gamecube'],['PlayStation 2','ps-2'],
+  ['Wii','wii'],['Dreamcast','dreamcast'],['Saturn','saturn'],['Game Boy','gb'],['Game Boy Color','gbc'],
+  ['MAME (arcade)','mame'],['Neo Geo','neo-geo'],['CPS 1','cps-1'],['CPS 2','cps-2'],['Master System','master-system'],
+  ['Game Gear','game-gear'],['Atari 2600','atari-2600'],['Atari ST','atari-st'],['ZX Spectrum','zx-spectrum'],
+  ['Commodore 64','c64-tapes'],['TurboGrafx16','turbografx16'],['Virtual Boy','virtual-boy'],['3DO','3do'],
+  ['Famicom','famicom'],['Sega 32X','sega-32x']
+];
+var MODERNO = [
+  ['Fortnite','xbox cloud · cuenta','https://www.xbox.com/play','externo'],
+  ['GTA Vice City','port webassembly','https://dos.zone/grand-theft-auto-vice-city/','externo'],
+  ['GTA V','geforce now · steam','https://play.geforcenow.com','externo'],
+  ['Krunker','shooter .io','https://krunker.io','marco'],
+  ['Shell Shockers','shooter .io','https://shellshock.io','marco'],
+  ['Slither.io','arcade .io','https://slither.io','marco'],
+  ['1v1.LOL','shooter construcción','https://1v1.lol','marco'],
+  ['Bloxd.io','tipo minecraft','https://bloxd.io','marco'],
+  ['Diep.io','shooter tanques','https://diep.io','marco'],
+  ['Agar.io','arcade','https://agar.io','marco'],
+  ['Zombs Royale','battle royale 2D','https://zombsroyale.io','marco'],
+  ['MooMoo.io','supervivencia','https://moomoo.io','marco'],
+  ['Skribbl.io','dibujar','https://skribbl.io','marco'],
+  ['Surviv.io','battle royale','https://surviv.io','marco'],
+  ['Hole.io','arcade','https://hole-io.com','marco']
+];
+var FILMS = [
+  ['Matrix','1999','tt0133093','ciencia ficción'],['Origen','2010','tt1375666','ciencia ficción'],['Interstellar','2014','tt0816692','ciencia ficción'],
+  ['Blade Runner 2049','2017','tt1856101','ciencia ficción'],['Alien, el octavo pasajero','1979','tt0078748','ciencia ficción'],
+  ['Depredador','1987','tt0093773','ciencia ficción'],['Terminator 2','1991','tt0103064','acción'],['El caballero oscuro','2008','tt0468569','acción'],
+  ['Batman Begins','2005','tt0372784','acción'],['Gladiator','2000','tt0172495','acción'],['Mad Max Fury Road','2015','tt1392190','acción'],
+  ['John Wick','2014','tt2911666','acción'],['John Wick 4','2023','tt10366206','acción'],['Top Gun Maverick','2022','tt1745960','acción'],
+  ['Misión Imposible Fallout','2018','tt4912910','acción'],['Salvar al soldado Ryan','1998','tt0120815','bélica'],['Dunkerque','2017','tt5013056','bélica'],
+  ['1917','2019','tt8579674','bélica'],['Pulp Fiction','1994','tt0110912','crimen'],['El padrino','1972','tt0068646','crimen'],
+  ['El padrino II','1974','tt0071562','crimen'],['Uno de los nuestros','1990','tt0099685','crimen'],['Casino','1995','tt0112641','crimen'],
+  ['El lobo de Wall Street','2013','tt0993846','crimen'],['Infiltrados','2006','tt0407887','crimen'],['Scarface','1983','tt0086250','crimen'],
+  ['Ciudad de Dios','2002','tt0317248','crimen'],['Cadena perpetua','1994','tt0111161','drama'],['Forrest Gump','1994','tt0109830','drama'],
+  ['El club de la lucha','1999','tt0137523','drama'],['El show de Truman','1998','tt0120382','drama'],['Náufrago','2000','tt0162222','drama'],
+  ['La milla verde','1999','tt0120689','drama'],['Green Book','2018','tt6966692','drama'],['El silencio de los corderos','1991','tt0102926','thriller'],
+  ['Seven','1995','tt0114369','thriller'],['El sexto sentido','1999','tt0167404','thriller'],['El truco final','2006','tt0482571','thriller'],
+  ['Shutter Island','2010','tt1130884','thriller'],['Léon el profesional','1994','tt0110413','thriller'],['Oldboy','2003','tt0364569','thriller'],
+  ['Parásitos','2019','tt6751668','thriller'],['El señor de los anillos La comunidad','2001','tt0120737','fantasía'],
+  ['El señor de los anillos Las dos torres','2002','tt0167261','fantasía'],['El señor de los anillos El retorno del rey','2003','tt0167260','fantasía'],
+  ['El hobbit Un viaje inesperado','2012','tt0903624','fantasía'],['Harry Potter y la piedra filosofal','2001','tt0241527','fantasía'],
+  ['Harry Potter y el prisionero de Azkaban','2004','tt0304141','fantasía'],['El laberinto del fauno','2006','tt0457430','fantasía'],
+  ['El viaje de Chihiro','2001','tt0245429','animación'],['El castillo ambulante','2004','tt0347149','animación'],['Mi vecino Totoro','1988','tt0096283','animación'],
+  ['La princesa Mononoke','1997','tt0119698','animación'],['Coco','2017','tt2380307','animación'],['WALL-E','2008','tt0910970','animación'],
+  ['Ratatouille','2007','tt0382932','animación'],['Up','2009','tt1049413','animación'],['Buscando a Nemo','2003','tt0266543','animación'],
+  ['Toy Story','1995','tt0114709','animación'],['Shrek','2001','tt0126029','animación'],['Shrek 2','2004','tt0298148','animación'],
+  ['El gigante de hierro','1999','tt0129167','animación'],['Spider-Man Un nuevo universo','2018','tt4633694','animación'],
+  ['Regreso al futuro','1985','tt0088763','aventura'],['El imperio contraataca','1980','tt0080684','aventura'],
+  ['Indiana Jones En busca del arca perdida','1981','tt0082971','aventura'],['Piratas del Caribe','2003','tt0325980','aventura'],
+  ['Jurassic Park','1993','tt0107290','aventura'],['Jumanji','1995','tt0113497','aventura'],['Rocky','1976','tt0075148','deporte'],
+  ['Creed','2015','tt3076658','deporte'],['El club de los poetas muertos','1989','tt0097165','drama'],['Good Will Hunting','1997','tt0119217','drama'],
+  ['Whiplash','2014','tt2582802','música'],['Bohemian Rhapsody','2018','tt1727824','música'],['La La Land','2016','tt3783958','música'],
+  ['Oppenheimer','2023','tt15398776','histórico'],['El pianista','2002','tt0253474','histórico'],['La lista de Schindler','1993','tt0108052','histórico'],
+  ['Braveheart','1995','tt0112573','histórico'],['Titanic','1997','tt0120338','romance'],['Orgullo y prejuicio','2005','tt0414387','romance'],
+  ['Antes del amanecer','1995','tt0112471','romance'],['El diario de Noa','2004','tt0332280','romance'],['Grease','1978','tt0077631','romance'],
+  ['Mamma Mia','2008','tt0795421','romance'],['Solo en casa','1990','tt0099785','familiar'],['E.T. el extraterrestre','1982','tt0083866','familiar'],
+  ['El rey león','1994','tt0110357','familiar'],['Aladdin','1992','tt0103639','familiar']
+];
+var SERIES = [
+  ['Breaking Bad','tt0903747'],['Juego de tronos','tt0944947'],['Stranger Things','tt4574334'],['The Office','tt0386676'],
+  ['Los Soprano','tt0141842'],['Chernobyl','tt7366338'],['Peaky Blinders','tt2442560'],['Dark','tt5753856'],['La casa de papel','tt6468322'],
+  ['Élite','tt7134908'],['The Boys','tt1190634'],['Severance','tt11280740'],['Succession','tt7660850'],['Better Call Saul','tt3032476'],
+  ['The Last of Us','tt3581920'],['Arcane','tt11126994'],['Los Bridgerton','tt8740790'],['Merlina','tt13443470'],['Rick y Morty','tt2861424'],
+  ['Los Simpson','tt0096697'],['Padre de familia','tt0182576'],['Bob Esponja','tt0206512'],['Hora de aventuras','tt1305826'],['Futurama','tt0149460']
+];
+var RADIOS = [
+  ['Groove Salad','chill, downtempo','https://ice1.somafm.com/groovesalad-128-mp3'],['Fluid','instrumental, hip hop','https://ice1.somafm.com/fluid-128-mp3'],
+  ['Drone Zone','ambient','https://ice1.somafm.com/dronezone-128-mp3'],['Deep Space One','ambient espacial','https://ice1.somafm.com/deepspaceone-128-mp3'],
+  ['Space Station Soma','ambient, downtempo','https://ice1.somafm.com/spacestationsoma-128-mp3'],['Beat Blender','deep house','https://ice1.somafm.com/beatblender-128-mp3'],
+  ['The Trip','progressive','https://ice1.somafm.com/thetrip-128-mp3'],['Secret Agent','lounge','https://ice1.somafm.com/secretagent-128-mp3'],
+  ['Illinois Street Lounge','lounge clásico','https://ice1.somafm.com/illstreet-128-mp3'],['Underground 80s','synth, new wave','https://ice1.somafm.com/u80s-128-mp3'],
+  ['PopTron','electropop','https://ice1.somafm.com/poptron-128-mp3'],['Suburbs of Goa','world, dub','https://ice1.somafm.com/suburbsofgoa-128-mp3'],
+  ['DEF CON Radio','electrónica','https://ice1.somafm.com/defcon-128-mp3'],['Boot Liquor','americana','https://ice1.somafm.com/bootliquor-128-mp3'],
+  ['Indie Pop Rocks','indie','https://ice1.somafm.com/indiepop-128-mp3'],['Covers','versiones','https://ice1.somafm.com/covers-128-mp3'],
+  ['Sonic Universe','jazz','https://ice1.somafm.com/sonicuniverse-128-mp3'],['Cliqhop','idm, glitch','https://ice1.somafm.com/cliqhop-128-mp3'],
+  ['Digitalis','experimental','https://ice1.somafm.com/digitalis-128-mp3'],['Mission Control','ambient espacial','https://ice1.somafm.com/missioncontrol-128-mp3'],
+  ['Synphaera','synth ambient','https://ice1.somafm.com/synphaera-128-mp3'],['Vaporwaves','vaporwave','https://ice1.somafm.com/vaporwaves-128-mp3'],
+  ['Heavyweight Reggae','reggae','https://ice1.somafm.com/reggae-128-mp3'],['Left Coast 70s','rock setentero','https://ice1.somafm.com/seventies-128-mp3'],
+  ['Metal Detector','metal','https://ice1.somafm.com/metal-128-mp3'],['Radio Paradise','rock, ecléctico','https://stream.radioparadise.com/mp3-192'],
+  ['RP Mellow','tranquilo','https://stream.radioparadise.com/mellow-192'],['RP Rock','rock','https://stream.radioparadise.com/rock-192'],
+  ['Nightride FM','synthwave','https://stream.nightride.fm/nightride.mp3'],['Chill Synth','chillsynth','https://stream.nightride.fm/chillsynth.mp3'],
+  ['Datawave','datawave','https://stream.nightride.fm/datawave.mp3'],['Spacesynth','spacesynth','https://stream.nightride.fm/spacesynth.mp3'],
+  ['Darksynth','darksynth','https://stream.nightride.fm/darksynth.mp3']
+];
+var MIRRORS = [
+  ['inv.nadeko.net','https://inv.nadeko.net'],
+  ['invidious.nerdvpn.de','https://invidious.nerdvpn.de'],
+  ['yt.chocolatemoo53.com','https://yt.chocolatemoo53.com'],
+  ['invidious.tiekoetter.com','https://invidious.tiekoetter.com']
+];
+var MOODS = [
+  ['Lofi','lofi hip hop'],['Chill','chill mix'],['Phonk','phonk'],['Synthwave','synthwave mix'],
+  ['Reggaetón','reggaeton'],['Trap','trap español'],['Rap español','rap español'],['Rap inglés','rap'],['Drill','drill'],
+  ['Pop','pop hits'],['Indie','indie rock'],['Rock','rock clásico'],['Metal','metal'],['Punk','punk'],
+  ['Jazz','jazz'],['Bossa nova','bossa nova'],['Clásica','música clásica'],['Piano','piano relajante'],
+  ['Cumbia','cumbia'],['Salsa','salsa'],['Bachata','bachata'],['Corridos','corridos tumbados'],
+  ['K-pop','kpop'],['J-pop','j-pop'],['Anime OST','anime ost'],['OST videojuegos','video game soundtrack'],
+  ['Bandas sonoras','banda sonora película'],['Deep house','deep house'],['Techno','techno'],['Drum and bass','drum and bass'],
+  ['Ambiente','ambient music'],['Focus','música para estudiar'],['Café jazz','cafe jazz'],['Flamenco','flamenco'],
+  ['Reggae','reggae'],['Hip hop 90s','hip hop 90s'],['R&B','r&b'],['Ópera','ópera']
+];
+var YT_TOPICS = [
+  ['Noticias','noticias hoy'],['Deportes','deportes'],['Fútbol','fútbol highlights'],['Baloncesto','baloncesto'],
+  ['Memes','memes español'],['Gameplay','gameplay sin comentarios'],['Speedruns','speedrun'],['Tutoriales','tutorial'],
+  ['Cocina','recetas fáciles'],['Repostería','repostería'],['Fitness','rutina ejercicio'],['Ciencia','divulgación científica'],
+  ['Historia','historia documental'],['Filosofía','filosofía'],['Misterio','misterios sin resolver'],['True crime','crímenes reales'],
+  ['Anime','anime'],['Películas completas','película completa español'],['Cortos','cortometraje'],['Música en vivo','concierto en directo'],
+  ['Podcasts','podcast'],['Entrevistas','entrevista'],['ASMR','asmr'],['Viajes','viaje vlog'],
+  ['Naturaleza','naturaleza 4k'],['Animales','animales salvajes'],['Coches','coches'],['Tecnología','tecnología review'],
+  ['Móviles','review móvil'],['Programación','programación tutorial'],['Diseño','diseño gráfico'],['Fotografía','fotografía tutorial'],
+  ['Idiomas','aprender inglés'],['Matemáticas','matemáticas ejercicios'],['Física','física explicado'],['Química','química'],
+  ['Biología','biología'],['Literatura','resumen libro'],['Arte','historia del arte'],['Dibujo','dibujo tutorial'],
+  ['Motivación','motivación'],['Productividad','productividad'],['Finanzas','finanzas personales'],['Emprendimiento','emprender'],
+  ['Curiosidades','curiosidades'],['Documentales','documental'],['Relax','música relajante'],['Ruido blanco','ruido blanco'],
+  ['Noticias tech','noticias tecnología'],['Retro','retrogaming'],['Autos','restauración coches'],['Espacio','astronomía'],
+  ['Océano','documental océano'],['Lluvia','sonido de lluvia'],['Comedia','comedia stand up'],['Stand-up','monólogo comedia'],
+  ['Cine','crítica cine'],['Series','resumen serie'],['Moda','moda'],['Maquillaje','maquillaje tutorial']
+];
+var YT_CHANNELS = [
+  ['Lofi Girl','Lofi Girl'],['MrBeast','MrBeast'],['Kurzgesagt','Kurzgesagt'],['Veritasium','Veritasium'],
+  ['National Geographic','National Geographic'],['TED','TED'],['NASA','NASA'],['BBC Earth','BBC Earth'],
+  ['Crunchyroll','Crunchyroll'],['Netflix','Netflix'],['Prime Video','Prime Video'],['Disney+','Disney Plus'],
+  ['El Rubius','elrubiusOMG'],['Vegetta777','Vegetta777'],['Willyrex','Willyrex'],['AuronPlay','AuronPlay'],
+  ['Ibai','Ibai'],['TheGrefg','TheGrefg'],['DjMaRiiO','DjMaRiiO'],['IlloJuan','IlloJuan'],
+  ['Jordi Wild','Jordi Wild'],['QuantumFracture','QuantumFracture'],['CdeCiencia','CdeCiencia'],['Derivando','Derivando'],
+  ['Academia Play','Academia Play'],['Dross','DrossRotzank'],['Jaime Altozano','Jaime Altozano'],['Ter','Ter'],
+  ['Date un Vlog','Date un Vlog'],['Pablo Lombao','Pablo Lombao'],['Ciencia Bit','Ciencia Bit'],['Unicoos','Unicoos']
+];
+var YT_MORE = [
+  ['Tendencias','https://www.youtube.com/feed/trending'],
+  ['Música','https://music.youtube.com'],
+  ['Películas gratis','https://www.youtube.com/feed/storefront'],
+  ['Directos','https://www.youtube.com/results?search_query=directo'],
+  ['Categorías','https://www.youtube.com/channels']
+];
+var AIS = [
+  ['ChatGPT','https://chatgpt.com/?q=',''],['Claude','https://claude.ai/new?q=',''],['Perplexity','https://www.perplexity.ai/search?q=',''],
+  ['Venice','https://venice.ai/chat?q=',''],['Gemini','https://gemini.google.com/app',''],['Copilot','https://copilot.microsoft.com/?q=',''],
+  ['Grok','https://grok.com/?q=',''],['Mistral','https://chat.mistral.ai/chat',''],['DeepSeek','https://chat.deepseek.com',''],
+  ['Blackbox','https://www.blackbox.ai/?q=','']
+];
+var STUDY = [
+  ['Wolfram Alpha','cálculo y mates','https://www.wolframalpha.com/input?i='],['Symbolab','ecuaciones','https://www.symbolab.com/solver?query='],
+  ['GeoGebra','geometría','https://www.geogebra.org/calculator'],['Desmos','graficadora','https://www.desmos.com/calculator'],
+  ['DeepL','traductor','https://www.deepl.com/translator#es/en/'],['WordReference','diccionario','https://www.wordreference.com/es/en/translation.asp?spen='],
+  ['Photomath','fotos de mates','https://photomath.com'],['RAE','diccionario español','https://dle.rae.es/'],
+  ['Wikipedia','consulta rápida','https://es.wikipedia.org/wiki/'],['ChatPDF','preguntar a un PDF','https://www.chatpdf.com']
+];
+var PLATS = {
+  fortnite:{n:'Fortnite (Xbox Cloud)', u:'https://www.xbox.com/play'}, gta:{n:'GTA V (GeForce Now)', u:'https://play.geforcenow.com'},
+  epic:{n:'Epic Games', u:'https://www.epicgames.com/id/login'}, steam:{n:'Steam', u:'https://store.steampowered.com/login/'},
+  netflix:{n:'Netflix', u:'https://www.netflix.com/login'}, prime:{n:'Prime Video', u:'https://www.primevideo.com/'},
+  disney:{n:'Disney+', u:'https://www.disneyplus.com/login'}, spotify:{n:'Spotify', u:'https://accounts.spotify.com/login'}, otro:{n:'Otro', u:''}
+};
+
+/* ===== DESCARGA ===== */
+var PROXIES = [
+  function(u){ return u; },
+  function(u){ return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u); }
+];
+function fetchBlob(url, onStatus){
+  return new Promise(function(resolve, reject){
+    var i = 0;
+    function next(){
+      if (i >= PROXIES.length){ reject(new Error('fallo')); return; }
+      var idx = i++;
+      if (onStatus) onStatus(idx === 0 ? 'descargando archivo...' : 'reintentando por proxy ' + idx + ' de 3...');
+      fetch(PROXIES[idx](url), {mode:'cors'})
+        .then(function(r){ if (!r.ok) throw 0; return r.blob(); })
+        .then(function(b){ if (b.size < 2048) throw 0; resolve(URL.createObjectURL(b)); })
+        .catch(next);
+    }
+    next();
+  });
+}
+
+/* ===== JUEGOS ===== */
+var stage = $('#stage'), stageBox = $('#stageBox'), stageTitle = $('#stageTitle');
+var currentExt = '';
+function clearStage(){ stage.classList.add('empty'); stageBox.innerHTML = ''; currentExt = ''; }
+$('#stageClose').onclick = clearStage;
+$('#stageExt').onclick = function(){ if (currentExt) window.open(currentExt, '_blank'); };
+function showStage(t, e){ stage.classList.remove('empty'); stageTitle.textContent = t; currentExt = e; stage.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+function setStatus(msg){
+  var s = stageBox.querySelector('.status');
+  if (!s){ s = document.createElement('div'); s.className = 'status'; stageBox.insertBefore(s, stageBox.firstChild); }
+  s.textContent = msg;
+}
+function playDos(name, url){
+  clearStage(); showStage(name + ' — DOS', url);
+  var d = document.createElement('div'); d.id = 'dos'; stageBox.appendChild(d);
+  if (!window.Dos){ d.innerHTML = '<div style="padding:20px;color:#888;font-size:12px">El emulador no ha cargado. Recarga la página.</div>'; return; }
+  emulators.pathPrefix = 'https://v8.js-dos.com/latest/emulators/';
+  fetchBlob(url, setStatus).then(function(blobUrl){
+    var s = stageBox.querySelector('.status'); if (s) s.remove();
+    Dos(d, { url: blobUrl, autoStart: true, mouseCapture: false, noCursor: true });
+  }).catch(function(){
+    d.innerHTML = '<div style="padding:20px;color:#888;font-size:12px">No se pudo descargar el juego. Prueba otro o ábrelo aparte.</div>';
+  });
+}
+function playFlash(name, url){
+  clearStage(); showStage(name + ' — Flash', url);
+  var d = document.createElement('div'); d.id = 'flash'; stageBox.appendChild(d);
+  if (!window.RufflePlayer){ d.innerHTML = '<div style="padding:20px;color:#888;font-size:12px">El emulador no ha cargado. Recarga la página.</div>'; return; }
+  var p = window.RufflePlayer.newest().createPlayer();
+  p.style.width = '100%'; p.style.height = '100%'; d.appendChild(p);
+  fetchBlob(url, setStatus).then(function(blobUrl){
+    var s = stageBox.querySelector('.status'); if (s) s.remove();
+    p.load(blobUrl);
+  }).catch(function(){
+    d.innerHTML = '<div style="padding:20px;color:#888;font-size:12px">No se pudo descargar el juego. Prueba otro.</div>';
+  });
+}
+function playFrame(name, url, h){
+  clearStage(); showStage(name, url);
+  var f = document.createElement('iframe');
+  f.src = url; f.height = h || 460; f.allowFullscreen = true;
+  f.setAttribute('referrerpolicy','no-referrer');
+  f.setAttribute('allow','autoplay; fullscreen; encrypted-media');
+  stageBox.appendChild(f);
+}
+function renderGames(cat){
+  var grid = $('#gameGrid'), note = $('#gameNote');
+  grid.innerHTML = '';
+  var q = $('#gameSearch').value.toLowerCase().trim();
+  function mk(l, m, s, fn, cls){
+    var b = document.createElement('button');
+    b.className = 'card' + (cls ? ' ' + cls : '');
+    b.innerHTML = '<span class="nm">' + l + '</span><span class="mt">' + m + '</span><span class="pl">' + s + '</span>';
+    b.onclick = fn; grid.appendChild(b);
+  }
+  if (cat === 'dos'){
+    DOS.filter(function(g){ return g[0].toLowerCase().indexOf(q) > -1; }).forEach(function(g){ mk(g[0], g[1], 'jugar aquí', function(){ playDos(g[0], g[2]); }); });
+    note.innerHTML = '<b>Emulador DOS real.</b> Tarda unos segundos en descargar. Haz clic en la pantalla para capturar el teclado: flechas para mover, Ctrl para disparar.';
+  }
+  if (cat === 'flash'){
+    FLASH.filter(function(g){ return g[0].toLowerCase().indexOf(q) > -1; }).forEach(function(g){ mk(g[0], g[1], 'jugar aquí', function(){ playFlash(g[0], 'https://archive.org/download/armorgames/' + g[2] + '.swf'); }); });
+    note.innerHTML = '<b>Ruffle, emulador de Flash.</b> Haz clic en el juego para que responda al teclado y al ratón.';
+  }
+  if (cat === 'consola'){
+    CONSOLA.filter(function(g){ return (g[0] + ' ' + g[1]).toLowerCase().indexOf(q) > -1; }).forEach(function(g){ mk(g[0], g[1], 'jugar aquí', function(){ playFrame(g[0], 'https://www.retrostic.com/es/roms/' + g[1] + '/' + g[2] + '/play', 470); }); });
+    if (!q) SISTEMAS.forEach(function(s){ mk(s[0], 'catálogo', 'explorar', function(){ playFrame(s[0] + ' — catálogo', 'https://www.retrostic.com/es/roms/' + s[1], 470); }, 'sys'); });
+    note.innerHTML = '<b>Reproductor de Retrostic.</b> Carga la ROM en su web dentro de este marco. Los recuadros discontinuos abren el catálogo de otras consolas. Si el marco sale vacío, pulsa "Abrir aparte".';
+  }
+  if (cat === 'moderno'){
+    MODERNO.filter(function(g){ return g[0].toLowerCase().indexOf(q) > -1; }).forEach(function(g){
+      mk(g[0], g[1], g[3] === 'externo' ? 'abrir fuera' : 'jugar aquí', function(){ g[3] === 'externo' ? window.open(g[2], '_blank') : playFrame(g[0], g[2], 430); });
+    });
+    note.innerHTML = '<b>Fortnite y GTA V</b> se abren en cloud con tu cuenta guardada. Los .io funcionan directamente aquí.';
+  }
+}
+$('#gameSearch').oninput = function(){ renderGames($('#gameTabs .on').dataset.cat); };
+$$('#gameTabs button').forEach(function(b){
+  b.onclick = function(){ $$('#gameTabs button').forEach(function(x){ x.classList.remove('on'); }); b.classList.add('on'); renderGames(b.dataset.cat); };
+});
+
+/* ===== PELIS ===== */
+var SERVERS = [
+  ['S1', function(id){ return 'https://vidsrc.to/embed/movie/' + id; }, function(id,s,e){ return 'https://vidsrc.to/embed/tv/' + id + '/' + s + '/' + e; }],
+  ['S2', function(id){ return 'https://vidsrc.xyz/embed/movie?imdb=' + id; }, function(id,s,e){ return 'https://vidsrc.xyz/embed/tv?imdb=' + id + '&season=' + s + '&episode=' + e; }],
+  ['S3', function(id){ return 'https://vidsrc.me/embed/movie?imdb=' + id; }, function(id,s,e){ return 'https://vidsrc.me/embed/tv?imdb=' + id + '&season=' + s + '&episode=' + e; }],
+  ['S4', function(id){ return 'https://vidsrc.cc/v2/embed/movie/' + id; }, function(id,s,e){ return 'https://vidsrc.cc/v2/embed/tv/' + id + '/' + s + '/' + e; }],
+  ['S5', function(id){ return 'https://www.2embed.cc/embed/' + id; }, function(id,s,e){ return 'https://www.2embed.cc/embedtv/' + id + '&s=' + s + '&e=' + e; }]
+];
+var serverIdx = 0;
+function playFilm(title, id, isTv, s, e){
+  s = s || 1; e = e || 1;
+  var url = isTv ? SERVERS[serverIdx][2](id, s, e) : SERVERS[serverIdx][1](id);
+  var host = $('#stage2'); host.innerHTML = '';
+  var bar = document.createElement('div'); bar.className = 'stagebar';
+  bar.innerHTML = '<span class="t">' + title + (isTv ? ' · T' + s + 'E' + e : '') + '</span><button data-ext>Abrir aparte</button><button data-close>Cerrar</button>';
+  var box = document.createElement('div'); box.className = 'stagebox';
+  var f = document.createElement('iframe');
+  f.src = url; f.height = 420; f.allowFullscreen = true;
+  f.setAttribute('referrerpolicy','no-referrer');
+  f.setAttribute('allow','autoplay; fullscreen; encrypted-media');
+  box.appendChild(f); host.appendChild(bar); host.appendChild(box);
+  if (isTv){
+    var nav = document.createElement('div'); nav.className = 'servers';
+    nav.innerHTML = '<button data-ep="-1">◀ cap.</button><button data-ep="1">cap. ▶</button>';
+    nav.querySelector('[data-ep="-1"]').onclick = function(){ playFilm(title, id, true, s, Math.max(1, e - 1)); };
+    nav.querySelector('[data-ep="1"]').onclick = function(){ playFilm(title, id, true, s, e + 1); };
+    host.appendChild(nav);
+  }
+  var srv = document.createElement('div'); srv.className = 'servers';
+  SERVERS.forEach(function(sv, i){
+    var b = document.createElement('button'); b.textContent = sv[0];
+    if (i === serverIdx) b.classList.add('on');
+    b.onclick = function(){ serverIdx = i; playFilm(title, id, isTv, s, e); };
+    srv.appendChild(b);
+  });
+  host.appendChild(srv);
+  bar.querySelector('[data-close]').onclick = function(){ host.innerHTML = ''; };
+  bar.querySelector('[data-ext]').onclick = function(){ window.open(url, '_blank'); };
+  host.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function renderFilms(){
+  var q = $('#filmSearch').value.toLowerCase().trim();
+  var grid = $('#filmGrid'); grid.innerHTML = '';
+  function add(t, m, fn){
+    var b = document.createElement('button'); b.className = 'card';
+    b.innerHTML = '<span class="nm">' + t + '</span><span class="mt">' + m + '</span><span class="pl">ver</span>';
+    b.onclick = fn; grid.appendChild(b);
+  }
+  FILMS.filter(function(f){ return (f[0] + ' ' + f[3]).toLowerCase().indexOf(q) > -1; }).forEach(function(f){ add(f[0], f[1] + ' · ' + f[3], function(){ playFilm(f[0], f[2], false); }); });
+  if (!q) SERIES.forEach(function(f){ add(f[0], 'serie · T1E1', function(){ playFilm(f[0], f[1], true); }); });
+}
+$('#filmSearch').oninput = renderFilms;
+$('#imdbGo').onclick = function(){ var v = $('#imdbInput').value.trim(); if (/^tt\d{5,}$/.test(v)) playFilm('ID ' + v, v, false); };
+$('#imdbInput').onkeydown = function(e){ if (e.key === 'Enter') $('#imdbGo').click(); };
+
+/* ===== RADIO ===== */
+var audio = $('#audio');
+RADIOS.forEach(function(r){
+  var b = document.createElement('button'); b.className = 'card';
+  b.innerHTML = '<span class="nm">' + r[0] + '</span><span class="mt">' + r[1] + '</span><span class="pl">escuchar</span>';
+  b.onclick = function(){
+    audio.src = r[2]; audio.play().catch(function(){});
+    $('#radName').textContent = r[0]; $('#radTag').textContent = 'en directo · ' + r[1];
+    $('#radio').classList.remove('off');
+    $$('#radioGrid .card').forEach(function(c){ c.style.borderColor = ''; });
+    b.style.borderColor = '#8b5cf6';
+  };
+  $('#radioGrid').appendChild(b);
+});
+audio.onpause = function(){ $('#radio').classList.add('off'); };
+audio.onplay = function(){ $('#radio').classList.remove('off'); };
+
+/* ===== VÍDEO ===== */
+var mirrorIdx = store.get('mirror', 0);
+if (mirrorIdx >= MIRRORS.length) mirrorIdx = 0;
+function isMirror(){ return store.get('mirrorMode', false); }
+function mirrorOptions(sel){
+  sel.innerHTML = '';
+  MIRRORS.forEach(function(m, i){
+    var o = document.createElement('option'); o.value = i; o.textContent = 'espejo: ' + m[0];
+    if (i === mirrorIdx) o.selected = true;
+    sel.appendChild(o);
+  });
+}
+function setMirror(v){ mirrorIdx = +v; store.set('mirror', mirrorIdx); }
+function paintBadge(el){ el.textContent = isMirror() ? 'sin anuncios (espejo)' : 'reproductor oficial'; el.classList.toggle('on', isMirror()); }
+function vidUrl(kind, val){
+  if (isMirror()){
+    var base = MIRRORS[mirrorIdx][1];
+    if (kind === 'search') return base + '/search?q=' + encodeURIComponent(val) + '&type=video';
+    if (kind === 'video') return base + '/watch?v=' + val;
+    return base + '/feed/trending';
+  }
+  if (kind === 'search') return 'https://www.youtube.com/embed?listType=search&list=' + encodeURIComponent(val) + '&rel=0';
+  if (kind === 'video') return 'https://www.youtube.com/embed/' + val + '?rel=0';
+  return 'https://www.youtube.com/embed/jfKfPfyJRdk';
+}
+var lastVid = { kind: 'video', val: 'jfKfPfyJRdk' };
+function vidLoad(kind, val, frame, badge, label, chips){
+  if (kind) lastVid = { kind: kind, val: val };
+  frame.src = vidUrl(lastVid.kind, lastVid.val);
+  paintBadge(badge);
+  if (label && chips){
+    var c = document.createElement('button');
+    c.className = 'chip'; c.textContent = label;
+    c.onclick = function(){ vidLoad(lastVid.kind, lastVid.val, frame, badge, null, null); };
+    chips.prepend(c);
+  }
+}
+function toggleMirror(instSel, frame, badge){
+  store.set('mirrorMode', !isMirror());
+  instSel.disabled = !isMirror();
+  vidLoad(null, null, frame, badge, null, null);
+}
+function mPlay(q){ if (!q) return; vidLoad('search', q, $('#mFrame'), $('#mBadge'), null, null); }
+function ytPlay(kind, val, label){ vidLoad(kind, val, $('#ytFrame'), $('#yBadge'), label, $('#ytChips')); }
+
+$('#mGo').onclick = function(){ mPlay($('#mSearch').value.trim()); };
+$('#mSearch').onkeydown = function(e){ if (e.key === 'Enter') mPlay($('#mSearch').value.trim()); };
+$('#mDirect').onclick = function(){ toggleMirror($('#mInst'), $('#mFrame'), $('#mBadge')); };
+$('#mInst').onchange = function(e){ setMirror(e.target.value); vidLoad(null, null, $('#mFrame'), $('#mBadge'), null, null); };
+$('#mExt').onclick = function(){
+  var q = lastVid.val || 'musica';
+  window.open(isMirror() ? MIRRORS[mirrorIdx][1] + '/search?q=' + encodeURIComponent(q) : 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q), '_blank');
+};
+$('#ytGo').onclick = function(){ ytPlay('search', $('#ytSearch').value.trim(), $('#ytSearch').value.trim()); };
+$('#ytSearch').onkeydown = function(e){ if (e.key === 'Enter') $('#ytGo').click(); };
+$('#ytLinkGo').onclick = function(){
+  var v = $('#ytLink').value.trim();
+  var m = v.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);
+  var id = m ? m[1] : (/^[A-Za-z0-9_-]{11}$/.test(v) ? v : '');
+  if (!id){ $('#ytLink').focus(); return; }
+  ytPlay('video', id, 'vídeo');
+};
+$('#ytLink').onkeydown = function(e){ if (e.key === 'Enter') $('#ytLinkGo').click(); };
+$('#yDirect').onclick = function(){ toggleMirror($('#yInst'), $('#ytFrame'), $('#yBadge')); };
+$('#yInst').onchange = function(e){ setMirror(e.target.value); vidLoad(null, null, $('#ytFrame'), $('#yBadge'), null, null); };
+$('#yExt').onclick = function(){
+  var v = lastVid.val;
+  window.open(isMirror() ? MIRRORS[mirrorIdx][1] + '/search?q=' + encodeURIComponent(v) : 'https://www.youtube.com/results?search_query=' + encodeURIComponent(v), '_blank');
+};
+
+/* ===== IA ===== */
+var msgs = $('#msgs'), hist = [];
+function addMsg(who, text, cls){
+  var d = document.createElement('div');
+  d.className = 'msg ' + who + (cls ? ' ' + cls : '');
+  d.textContent = text;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+  return d;
+}
+function ask(text){
+  if (!text) return;
+  addMsg('u', text);
+  hist.push({ role: 'user', content: text });
+  var bot = addMsg('b', 'pensando...');
+  var model = $('#aiModel').value;
+  var body = JSON.stringify({ model: model, messages: hist.slice(-12) });
+  fetch('https://text.pollinations.ai/openai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: body
+  })
+  .then(function(r){ if (!r.ok) throw 0; return r.json(); })
+  .then(function(j){
+    var out = j && j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+    if (!out) throw 0;
+    bot.textContent = out;
+    hist.push({ role: 'assistant', content: out });
+    msgs.scrollTop = msgs.scrollHeight;
+  })
+  .catch(function(){
+    fetch('https://text.pollinations.ai/' + encodeURIComponent(text) + '?model=' + model)
+      .then(function(r){ if (!r.ok) throw 0; return r.text(); })
+      .then(function(txt){
+        bot.textContent = txt;
+        hist.push({ role: 'assistant', content: txt });
+        msgs.scrollTop = msgs.scrollHeight;
+      })
+      .catch(function(){
+        bot.className = 'msg err';
+        bot.textContent = 'No ha respondido. Usa los botones de "Abrir en otra IA" para lanzar la misma pregunta.';
+      });
+  });
+}
+$('#aiSend').onclick = function(){ var v = $('#aiPrompt').value.trim(); if (!v) return; $('#aiPrompt').value = ''; ask(v); };
+$('#aiPrompt').onkeydown = function(e){ if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); $('#aiSend').click(); } };
+$('#aiClear').onclick = function(){
+  msgs.innerHTML = '';
+  hist = [];
+  addMsg('b', 'Hola. Pregúntame lo que sea: dudas de clase, explicaciones, resúmenes o código. Funciona sin cuenta.');
+};
+
+/* ===== CUENTAS ===== */
+function renderAccts(){
+  var list = $('#acctList'); var items = store.get('accts', []);
+  if (!items.length){ list.innerHTML = '<div class="empty">Todavía no hay cuentas guardadas.</div>'; return; }
+  list.innerHTML = '';
+  items.forEach(function(a, i){
+    var d = document.createElement('div'); d.className = 'acct';
+    d.innerHTML = '<div class="top"><b>' + a.n + '</b><span class="tag">' + (PLATS[a.p] ? PLATS[a.p].n : a.p) + '</span></div>' +
+      '<div class="det">' + a.u + ' · <span data-pw>••••••••</span></div>' +
+      '<div class="acts"><button data-r>Ver clave</button><button data-c>Copiar</button>' +
+      (PLATS[a.p] && PLATS[a.p].u ? '<button class="go" data-g>Entrar</button>' : '') + '<button data-x>Borrar</button></div>';
+    d.querySelector('[data-r]').onclick = function(ev){
+      var s = d.querySelector('[data-pw]'); var show = s.textContent === '••••••••';
+      s.textContent = show ? (a.w || '(sin clave)') : '••••••••';
+      ev.target.textContent = show ? 'Ocultar' : 'Ver clave';
+    };
+    d.querySelector('[data-c]').onclick = function(ev){
+      navigator.clipboard.writeText(a.u + '\t' + (a.w || '')).catch(function(){});
+      ev.target.textContent = 'Copiado'; setTimeout(function(){ ev.target.textContent = 'Copiar'; }, 1200);
+    };
+    var g = d.querySelector('[data-g]'); if (g) g.onclick = function(){ window.open(PLATS[a.p].u, '_blank'); };
+    d.querySelector('[data-x]').onclick = function(){ var arr = store.get('accts', []); arr.splice(i, 1); store.set('accts', arr); renderAccts(); };
+    list.appendChild(d);
+  });
+}
+$('#acAdd').onclick = function(){
+  var u = $('#acUser').value.trim(); if (!u){ $('#acUser').focus(); return; }
+  var n = $('#acName').value.trim() || (PLATS[$('#acPlat').value] || {}).n;
+  var arr = store.get('accts', []); arr.push({ n: n, p: $('#acPlat').value, u: u, w: $('#acPass').value });
+  store.set('accts', arr);
+  $('#acName').value = ''; $('#acUser').value = ''; $('#acPass').value = '';
+  renderAccts();
+};
+$('#acClear').onclick = function(){ store.set('accts', []); renderAccts(); };
+
+/* ===== RELLENO ===== */
+AIS.forEach(function(a){
+  var b = document.createElement('button'); b.className = 'chip'; b.textContent = a[0];
+  b.onclick = function(){
+    var q = $('#aiPrompt').value.trim() || (hist.length ? hist[hist.length-1].content : '');
+    if (!q){ window.open(a[1].replace(/\?q=$/, '') || 'https://duckduckgo.com', '_blank'); return; }
+    window.open(a[1] + encodeURIComponent(q) + a[2], '_blank');
+  };
+  $('#aiChips').appendChild(b);
+});
+STUDY.forEach(function(s){
+  var b = document.createElement('button'); b.className = 'card';
+  b.innerHTML = '<span class="nm">' + s[0] + '</span><span class="mt">' + s[1] + '</span><span class="pl">abrir</span>';
+  b.onclick = function(){ var q = $('#aiPrompt').value.trim(); window.open(s[2] + (q ? encodeURIComponent(q) : ''), '_blank'); };
+  $('#studyGrid').appendChild(b);
+});
+MOODS.forEach(function(m){
+  var b = document.createElement('button'); b.className = 'card sq';
+  b.innerHTML = '<span class="nm">' + m[0] + '</span><span class="pl">sonar</span>';
+  b.onclick = function(){ mPlay(m[1]); };
+  $('#mMoods').appendChild(b);
+});
+YT_TOPICS.forEach(function(t){
+  var b = document.createElement('button'); b.className = 'card sq';
+  b.innerHTML = '<span class="nm">' + t[0] + '</span><span class="pl">buscar</span>';
+  b.onclick = function(){ ytPlay('search', t[1], t[0]); };
+  $('#ytTopics').appendChild(b);
+});
+YT_CHANNELS.forEach(function(c){
+  var b = document.createElement('button'); b.className = 'card sq';
+  b.innerHTML = '<span class="nm">' + c[0] + '</span><span class="pl">ver</span>';
+  b.onclick = function(){ ytPlay('search', c[1] + ' canal', c[0]); };
+  $('#ytChannels').appendChild(b);
+});
+YT_MORE.forEach(function(c){
+  var b = document.createElement('button'); b.className = 'card sq';
+  b.innerHTML = '<span class="nm">' + c[0] + '</span><span class="pl">abrir fuera</span>';
+  b.onclick = function(){ window.open(c[1], '_blank'); };
+  $('#ytMore').appendChild(b);
+});
+
+mirrorOptions($('#mInst')); mirrorOptions($('#yInst'));
+$('#mInst').disabled = !isMirror(); $('#yInst').disabled = !isMirror();
+paintBadge($('#mBadge')); paintBadge($('#yBadge'));
+vidLoad('video', 'jfKfPfyJRdk', $('#mFrame'), $('#mBadge'), null, null);
+vidLoad('video', 'jfKfPfyJRdk', $('#ytFrame'), $('#yBadge'), null, null);
+
+$('#clearBtn').onclick = function(){
+  try { localStorage.removeItem('dark_tab'); } catch(e){}
+  $('#clearBtn').textContent = 'Borrado';
+  setTimeout(function(){ $('#clearBtn').textContent = 'Borrar preferencias (no cuentas)'; }, 1400);
+};
+renderGames('dos'); renderFilms(); renderAccts();
+var t0 = store.get('tab', null);
+if (t0 && $('#s-' + t0)) go(t0);
+})();
+</script>
+</body>
+</html>
